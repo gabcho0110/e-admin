@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: #f3f5f8;
+  --panel: #ffffff;
+  --panel-2: #f8fafc;
+  --hairline: #e2e7ef;
+  --content: #202b3c;
+  --muted: #5b6b82;
+  --ring: #c5a253;
+  /* Канални стойности — позволяват opacity модификатори (bg-panel/85 и т.н.) */
+  --canvas-rgb: 243 245 248;
+  --panel-rgb: 255 255 255;
+  --panel-2-rgb: 248 250 252;
+  --hairline-rgb: 226 231 239;
+  --content-rgb: 32 43 60;
+  --muted-rgb: 91 107 130;
+  color-scheme: light;
+}
+
+.dark {
+  --canvas: #0b1524;
+  --panel: #101f33;
+  --panel-2: #152741;
+  --hairline: #1f3550;
+  --content: #e8edf5;
+  --muted: #93a4bc;
+  --ring: #c5a253;
+  --canvas-rgb: 11 21 36;
+  --panel-rgb: 16 31 51;
+  --panel-2-rgb: 21 39 65;
+  --hairline-rgb: 31 53 80;
+  --content-rgb: 232 237 245;
+  --muted-rgb: 147 164 188;
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    border-color: var(--hairline);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--content);
+    font-feature-settings: "kern", "liga", "calt";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: rgba(197, 162, 83, 0.28);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .surface-card {
+    @apply rounded-xl border border-hairline bg-panel shadow-card;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-[13px] font-medium text-content;
+  }
+
+  .field-input {
+    @apply w-full rounded-lg border border-hairline bg-panel px-3 py-2.5 text-sm text-content
+      placeholder:text-muted/70 transition-colors
+      hover:border-navy-300 focus:border-navy-500 focus:outline-none focus:ring-2 focus:ring-gold/25
+      disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .table-shell {
+    @apply w-full overflow-x-auto rounded-xl border border-hairline bg-panel;
+  }
+
+  .table-base {
+    @apply w-full border-collapse text-left text-sm;
+  }
+
+  .table-base thead th {
+    @apply whitespace-nowrap border-b border-hairline bg-panel2 px-4 py-3 text-[11px]
+      font-semibold uppercase tracking-[0.09em] text-muted;
+  }
+
+  .table-base tbody td {
+    @apply border-b border-hairline/70 px-4 py-3 align-middle;
+  }
+
+  .table-base tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .table-base tbody tr {
+    @apply transition-colors hover:bg-panel2/70;
+  }
+
+  .doc-body {
+    @apply whitespace-pre-wrap text-[14.5px] leading-[1.85];
+  }
+
+  .gold-rule {
+    @apply h-px w-14 bg-gold;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--hairline);
+    border-radius: 999px;
+  }
+
+  .animate-delay-1 {
+    animation-delay: 80ms;
+  }
+
+  .animate-delay-2 {
+    animation-delay: 160ms;
+  }
+
+  .animate-delay-3 {
+    animation-delay: 240ms;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .print-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  @page {
+    margin: 22mm 18mm;
+  }
+}

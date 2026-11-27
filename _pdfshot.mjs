@@ -1,0 +1,12 @@
+import puppeteer from "puppeteer-core";
+const file = process.argv[2];
+const out = process.argv[3];
+const browser = await puppeteer.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", headless: true, args: ["--no-sandbox", "--disable-pdf-extension=false"] });
+const page = await browser.newPage();
+await page.setViewport({ width: 1200, height: 1600 });
+await page.goto(`file://${file}`, { waitUntil: "networkidle2", timeout: 60000 });
+await new Promise(r => setTimeout(r, 3000));
+await page.screenshot({ path: out });
+const txt = await page.evaluate(() => document.body ? document.body.innerText.slice(0, 300) : "no body");
+console.log("TEXT:", JSON.stringify(txt));
+await browser.close();
